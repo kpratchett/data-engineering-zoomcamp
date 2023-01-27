@@ -2,4 +2,4 @@
 */ny_taxi_postgres_data/*
 
 #ignore large files from raw data folder
-/raw_data/
+*/raw_data/*
