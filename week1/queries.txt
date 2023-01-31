@@ -1,0 +1,35 @@
+SELECT max(tip_amount), "DOLocationID"
+FROM green_taxi_trips
+WHERE "PULocationID" = 7
+GROUP BY "PULocationID", "DOLocationID";
+
+SELECT count(*)
+FROM green_taxi_trips
+WHERE lpep_pickup_datetime::text LIKE '2019-01-15%' AND lpep_dropoff_datetime::text LIKE '2019-01-15%'
+
+SELECT lpep_pickup_datetime FROM green_taxi_trips
+WHERE trip_distance =
+(SELECT max(trip_distance)
+FROM green_taxi_trips)
+
+SELECT passenger_count, count(*)
+FROM green_taxi_trips
+WHERE (passenger_count = 2 or passenger_count = 3)
+AND lpep_pickup_datetime::text like '2019-01-01%'
+GROUP BY passenger_count
+
+SELECT "DOLocationID", "tip_amount"
+FROM green_taxi_trips 
+WHERE "PULocationID" =
+(SELECT "LocationID" 
+FROM taxi_zone_lookup
+WHERE "Zone" = 'Astoria')
+ORDER BY tip_amount desc 
+LIMIT 1;
+
+SELECT "PULocationID", "DOLocationID", "Zone", "tip_amount"
+FROM green_taxi_trips g
+left join taxi_zone_lookup t on g."PULocationID" = t."LocationID"
+WHERE t."Zone" = 'Astoria'
+ORDER BY tip_amount desc 
+LIMIT 1;
