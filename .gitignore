@@ -4,3 +4,5 @@
 #ignore large files from raw data folder
 */raw_data/*
 *.parquet
+/__pycache__/
+__pycache__
